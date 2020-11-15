@@ -19,28 +19,7 @@ jobs:
         run: |
           python3 -m pip install -U pip
           python3 -m pip install requests
-          python3 pango-cairo/ci/linux-build.py amd64
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: final-build
-          path: dist
-  build-x86:    
-    runs-on: ubuntu-16.04
-    container: i386/python
-    env:
-      WORKSPACE: ${{ github.workspace }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install expat
-        run: |
-          apt-get install -y expat
-          apt-get install python3 python3-pip
-      - name: Build
-        run: |
-          python3 -m pip install -U pip
-          python3 -m pip install requests
-          python3 pango-cairo/ci/linux-build.py amd64
+          python3 ci/linux-build.py amd64
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
