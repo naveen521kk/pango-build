@@ -16,9 +16,9 @@ jobs:
     steps:    
       - name: Download Repo
         run: |
-          curl -L https://github.com/naveen521kk/pango-cairo-build/archive/master.zip -o clone.zip
+          curl -L https://github.com/naveen521kk/pango-build/archive/master.zip -o clone.zip
           unzip clone.zip
-          mv pango-cairo-build-* pango-cairo
+          mv pango-build-* pango-cairo
       - name: Build
         run: |
           /opt/python/cp38-cp38/bin/python -m pip install requests
