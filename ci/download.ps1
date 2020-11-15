@@ -51,21 +51,21 @@ pip install --upgrade meson==0.55.3 ninja
 echo "Copying x86 files"
 mkdir x86
 cd x86
-Copy-Item -Path "$PWD\..\cairo" -Destination "$PWD\cairo" –Recurse
-Copy-Item -Path "$PWD\..\pango" -Destination "$PWD\pango" –Recurse
-Copy-Item -Path "$PWD\..\fribidi" -Destination "$PWD\fribidi" –Recurse
-Copy-Item -Path "$PWD\..\harfbuzz" -Destination "$PWD\harfbuzz" –Recurse
-Copy-Item -Path "$PWD\..\pkgconf" -Destination "$PWD\pkgconf" –Recurse
-Copy-Item -Path "$PWD\..\glib" -Destination "$PWD\glib" –Recurse
+Copy-Item -Path "$PWD\..\cairo" -Destination "$PWD\cairo" -Recurse
+Copy-Item -Path "$PWD\..\pango" -Destination "$PWD\pango" -Recurse
+Copy-Item -Path "$PWD\..\fribidi" -Destination "$PWD\fribidi" -Recurse
+Copy-Item -Path "$PWD\..\harfbuzz" -Destination "$PWD\harfbuzz" -Recurse
+Copy-Item -Path "$PWD\..\pkgconf" -Destination "$PWD\pkgconf" -Recurse
+Copy-Item -Path "$PWD\..\glib" -Destination "$PWD\glib" -Recurse
 cd ../
 
 echo "Copying x64 files"
 mkdir x64
 cd x64
-Copy-Item -Path "$PWD\..\cairo" -Destination "$PWD\cairo" –Recurse
-Copy-Item -Path "$PWD\..\pango" -Destination "$PWD\pango" –Recurse
-Copy-Item -Path "$PWD\..\fribidi" -Destination "$PWD\fribidi" –Recurse
-Copy-Item -Path "$PWD\..\harfbuzz" -Destination "$PWD\harfbuzz" –Recurse
-Copy-Item -Path "$PWD\..\pkgconf" -Destination "$PWD\pkgconf" –Recurse
-Copy-Item -Path "$PWD\..\glib" -Destination "$PWD\glib" –Recurse
+Copy-Item -Path "$PWD\..\cairo" -Destination "$PWD\cairo" -Recurse
+Copy-Item -Path "$PWD\..\pango" -Destination "$PWD\pango" -Recurse
+Copy-Item -Path "$PWD\..\fribidi" -Destination "$PWD\fribidi" -Recurse
+Copy-Item -Path "$PWD\..\harfbuzz" -Destination "$PWD\harfbuzz" -Recurse
+Copy-Item -Path "$PWD\..\pkgconf" -Destination "$PWD\pkgconf" -Recurse
+Copy-Item -Path "$PWD\..\glib" -Destination "$PWD\glib" -Recurse
 cd ../
