@@ -15,12 +15,11 @@ jobs:
     steps:    
       - name: Download Repo
         run: |
-          apt update
-          apt upgrade
-          apt install git
-          apt install curl
-          apt install python3-dev python3-pip
-          apt
+          apt -y update
+          apt -y upgrade
+          apt -y install git
+          apt -y install curl
+          apt -y install python3-dev python3-pip
           curl -L https://github.com/naveen521kk/pango-build/archive/master.zip -o clone.zip
           unzip clone.zip
           mv pango-build-* pango-cairo
