@@ -1,0 +1,23 @@
+name: Build Linux
+on:
+  push:
+    branches: [ master ]
+jobs:
+  build:    
+    runs-on: ubuntu-latest
+    container: quay.io/pypa/manylinux2010_${{matrix.container}}
+    strategy:
+      fail-fast: false
+      matrix:
+        container: ["x86_64","i686"]
+    steps:    
+      - uses: actions/checkout@v2
+      - name: Build
+        run: |
+          python3 ci/linux-build.py
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: final-build
+          path: cairo_release.zip
+

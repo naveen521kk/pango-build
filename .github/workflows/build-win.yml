@@ -17,19 +17,19 @@ jobs:
       - uses: actions/checkout@v2
       - name: Download and Copy Necessary Files
         shell: powershell
-        run: ci/download.ps1
+        run: ci/win/download.ps1
       - name: Build x86
         run: |
           cd x86
           $prevPath = $env:PATH
-          & "$env:WORKSPACE\ci\build.ps1" 32
+          & "$env:WORKSPACE\ci\win\build.ps1" 32
           $env:PATH=$prevPath
           cd ../
       - name: Build x64
         run: |
           cd x64
           $prevPath = $env:PATH
-          & "$env:WORKSPACE\ci\build.ps1" 64
+          & "$env:WORKSPACE\ci\win\build.ps1" 64
           $env:PATH = $prevPath
           cd ../
       - name: Pack Assets
@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: final-build
-          path: cairo_release.zip
+          path: dist
 
