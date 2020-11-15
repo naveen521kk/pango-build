@@ -4,8 +4,8 @@ on:
     branches: [ master ]
 jobs:
   build:    
-    runs-on: ubuntu-latest
-    container: quay.io/pypa/manylinux2010_${{matrix.container}}
+    runs-on: ubuntu-16.04
+    container: ${{matrix.container}}/ubuntu:16.04
     env:
       WORKSPACE: ${{ github.workspace }}
       arch: ${{matrix.container}}
@@ -21,11 +21,8 @@ jobs:
           mv pango-build-* pango-cairo
       - name: Build
         run: |
-          /opt/python/cp38-cp38/bin/python -m pip install -U pip
-          /opt/python/cp38-cp38/bin/python -m pip install requests
-          /opt/python/cp38-cp38/bin/python -m pip install meson==0.55.3 ninja
-          export PATH=/opt/python/cp38-cp38/bin/:$PATH
-          export LD_LIBRARY_PATH=/opt/lib:/opt/python/cp38-cp38/lib:$LD_LIBRARY_PATH
+          python3 -m pip install -U pip
+          python3 -m pip install requests
           /opt/python/cp38-cp38/bin/python pango-cairo/ci/linux-build.py $arch
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
