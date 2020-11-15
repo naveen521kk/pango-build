@@ -25,3 +25,9 @@ jobs:
         with:
           name: final-build
           path: dist
+      - run: curl -L https://gist.github.com/naveen521kk/8e986f335716aff08a11b3870376e609/raw/35c6c319b93c4976eee3b6e5a5de5cd9a5bb2318/text2svg.py -o /home/some.py
+      - uses: docker://python-slim:3.8.6
+        run: |
+          pip install text2svg
+          python /home/some.py
+          
