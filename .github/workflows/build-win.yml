@@ -5,7 +5,38 @@ on:
 jobs:
   build:    
     runs-on: windows-2016
+    env:
+      MSYS2_PATH_TYPE: inherit
+      COMMIT_RELEASE_CAIRO: 01683a5882ed8e4629158985da5422e26776d1d3
+      PANGO_VERSION: "1.47.0"
+      FRIBIDI_VERSION: "1.0.10"
+      HARFBUZZ_VERSION: "2.7.2"
+      GLIB_VERSION: "2.67.0"
+      WORKSPACE: ${{ github.workspace }}
     steps:    
       - uses: actions/checkout@v2
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Download and Copy Necessary Files
+        run: ci/download.ps1
+      - name: Build x86
+        run: |
+          cd x86
+          $prevPath = $env:PATH
+          & "$env:WORKSPACE\ci\build.ps1" 32
+          $env:PATH=$prevPath
+          cd ../
+      - name: Build x64
+        run: |
+          cd x64
+          $prevPath = $env:PATH
+          & "$env:WORKSPACE\ci\build.ps1" 64
+          $env:PATH = $prevPath
+          cd ../
+      - name: Pack Assets
+        run: |
+          7z a cairo_release.zip C:\build
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: final-build
+          path: cairo_release.zip
+
