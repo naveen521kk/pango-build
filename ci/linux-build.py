@@ -1,4 +1,3 @@
-from urllib.request import urlretrieve as download
 import tempfile
 from pathlib import Path
 import tarfile
@@ -7,7 +6,10 @@ import os
 import subprocess
 import sys
 import argparse
+import ssl
+from urllib.request import urlopen
 
+import certifi
 #version to build
 COMMIT_RELEASE_CAIRO="ed98414686ede45a4f2302b4521dece51acdb785"
 PANGO_VERSION="1.47.0"
@@ -42,6 +44,16 @@ def call_command(command,pwd=None):
     print(out[0].decode())
   if out[1].decode()!="":
     print(out[1].decode())
+def download(url, target_path):
+    """Download url to target_path."""
+    print("Downloading {}...".format(url))
+    context = ssl.create_default_context(
+        ssl.Purpose.SERVER_AUTH, cafile=certifi.where()
+    )
+    with urllib.request.urlopen(url, context=context) as response, open(
+        target_path, "wb"
+    ) as f:
+        shutil.copyfileobj(response, f)
 
 def setup_meson():
   global meson
