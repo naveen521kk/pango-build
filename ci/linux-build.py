@@ -8,6 +8,7 @@ import sys
 import argparse
 import ssl
 from urllib.request import urlopen
+import urllib.request
 
 import certifi
 #version to build
