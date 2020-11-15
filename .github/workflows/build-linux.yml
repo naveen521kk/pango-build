@@ -8,6 +8,7 @@ jobs:
     env:
       WORKSPACE: ${{ github.workspace }}
       arch: ${{matrix.container}}
+      DEBIAN_FRONTEND: noninteractive
     strategy:
       fail-fast: false
       matrix:
