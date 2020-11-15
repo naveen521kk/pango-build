@@ -22,6 +22,8 @@ jobs:
       - name: Build
         run: |
           /opt/python/cp38-cp38/bin/python -m pip install requests
+          /opt/python/cp38-cp38/bin/python -m pip install meson==0.55.3 ninja
+          export PATH=/opt/python/cp38-cp38/bin/:$PATH
           /opt/python/cp38-cp38/bin/python pango-cairo/ci/linux-build.py $arch
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
