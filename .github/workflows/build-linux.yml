@@ -35,3 +35,7 @@ jobs:
           python -m pip install pip
           python -m pip install text2svg
           python some.py
+      - uses: actions/upload-artifact@v2
+        with:
+          name: out
+          path: hello.svg
