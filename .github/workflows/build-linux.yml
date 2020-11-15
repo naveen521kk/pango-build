@@ -8,6 +8,7 @@ jobs:
     container: quay.io/pypa/manylinux2010_${{matrix.container}}
     env:
       WORKSPACE: ${{ github.workspace }}
+      arch: ${{matrix.container}}
     strategy:
       fail-fast: false
       matrix:
@@ -20,7 +21,7 @@ jobs:
           mv pango-cairo-build-* pango-cairo
       - name: Build
         run: |
-          /opt/python/cp38-cp38/bin/python pango-cairo/ci/linux-build.py
+          /opt/python/cp38-cp38/bin/python pango-cairo/ci/linux-build.py $arch
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
