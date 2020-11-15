@@ -15,9 +15,9 @@ jobs:
     steps:    
       - name: Download Repo
         run: |
-          curl -L https://github.com/naveen521kk/pango-cairo-build/archive/master.zip -o /opt/clone.zip
+          curl -L https://github.com/naveen521kk/pango-cairo-build/archive/master.zip -o clone.zip
           yum install 7z
-          7z x /opt/clone.zip -o$WORKSPACE
+          7z x clone.zip
       - name: Build
         run: |
           python3 ci/linux-build.py
