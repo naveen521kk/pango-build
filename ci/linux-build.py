@@ -20,7 +20,7 @@ PKG_CONFIG_VERSION="1.7.0"
 parser = argparse.ArgumentParser(description="Build Pango and Cairo")
 parser.add_argument(
     "arch", type=str, help="The archistruture to build. On windows, vscode environment should be opened accordingly.",
-    choices=["x86_64","i686"], default="x86_64"
+    choices=["amd64","i686"], default="amd64"
 )
 args = parser.parse_args()
 

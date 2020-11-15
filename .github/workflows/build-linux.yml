@@ -5,14 +5,14 @@ on:
 jobs:
   build:    
     runs-on: ubuntu-16.04
-    container: ${{matrix.container}}/ubuntu:16.04
+    container: ${{matrix.container}}/ubuntu
     env:
       WORKSPACE: ${{ github.workspace }}
       arch: ${{matrix.container}}
     strategy:
       fail-fast: false
       matrix:
-        container: ["x86_64","i686"]
+        container: ["amd64","i686"]
     steps:    
       - name: Download Repo
         run: |
