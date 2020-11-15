@@ -16,7 +16,6 @@ jobs:
       - name: Download Repo
         run: |
           curl -L https://github.com/naveen521kk/pango-cairo-build/archive/master.zip -o clone.zip
-          yum install 7z
           7z x clone.zip
       - name: Build
         run: |
