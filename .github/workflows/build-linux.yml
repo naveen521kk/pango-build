@@ -2,40 +2,45 @@ name: Build Linux
 on:
   push:
 jobs:
-  build:    
+  build-x64:    
     runs-on: ubuntu-16.04
-    container: ${{matrix.container}}/ubuntu
     env:
       WORKSPACE: ${{ github.workspace }}
-      arch: ${{matrix.container}}
-      DEBIAN_FRONTEND: noninteractive
-    strategy:
-      fail-fast: false
-      matrix:
-        container: ["amd64","i686"]
-    steps:    
-      - name: Download Repo
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install expat
         run: |
-          apt -y update
-          apt -y upgrade
-          apt -y install git
-          apt -y install curl
-          apt-get install -y unzip
           apt-get install -y expat
-          curl -L https://github.com/naveen521kk/pango-build/archive/master.zip -o clone.zip
-          unzip clone.zip
-          mv pango-build-* pango-cairo
       - name: Setup-Python
-        run: |
-          apt -y install software-properties-common
-          add-apt-repository -y ppa:deadsnakes/ppa
-          apt -y install python3.7
-          
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
       - name: Build
         run: |
           python3 -m pip install -U pip
           python3 -m pip install requests
-          python3 pango-cairo/ci/linux-build.py $arch
+          python3 pango-cairo/ci/linux-build.py amd64
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: final-build
+          path: dist
+  build-x86:    
+    runs-on: ubuntu-16.04
+    container: i386/python
+    env:
+      WORKSPACE: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install expat
+        run: |
+          apt-get install -y expat
+          apt-get install python3 python3-pip
+      - name: Build
+        run: |
+          python3 -m pip install -U pip
+          python3 -m pip install requests
+          python3 pango-cairo/ci/linux-build.py amd64
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
