@@ -16,6 +16,7 @@ jobs:
     steps:    
       - uses: actions/checkout@v2
       - name: Download and Copy Necessary Files
+        shell: powershell
         run: ci/download.ps1
       - name: Build x86
         run: |

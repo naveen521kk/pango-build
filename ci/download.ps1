@@ -15,30 +15,30 @@ curl https://github.com/pkgconf/pkgconf/archive/pkgconf-1.7.0.zip -o pkgconf.zip
 Move-Item -Path pkgconf-* -Destination pkgconf -Force
 
 echo "Getting xz Utils"
-curl -L https://tukaani.org/xz/xz-5.2.5-windows.zip -OutFile xz.zip
+curl https://tukaani.org/xz/xz-5.2.5-windows.zip -OutFile xz.zip
 7z x xz.zip -oC:\xzUtil
 $env:PATH = "C:\xzUtil\bin_x86-64;$env:PATH"
 
 echo "Getting Pango"
-curl -L https://ftp.gnome.org/pub/GNOME/sources/pango/$(("$PANGO_VERSION" -split '\.')[0,1] -join ".")/pango-$($PANGO_VERSION).tar.xz -OutFile pango.tar.xz
+curl https://ftp.gnome.org/pub/GNOME/sources/pango/$(("$PANGO_VERSION" -split '\.')[0,1] -join ".")/pango-$($PANGO_VERSION).tar.xz -OutFile pango.tar.xz
 xz -d pango.tar.xz
 tar -xf pango.tar
 Move-Item -Path pango-* -Destination pango -Force
 
 echo "Getting Fribidi"
-curl -L https://github.com/fribidi/fribidi/releases/download/v$($FRIBIDI_VERSION)/fribidi-$($FRIBIDI_VERSION).tar.xz -OutFile fribidi.tar.xz
+curl https://github.com/fribidi/fribidi/releases/download/v$($FRIBIDI_VERSION)/fribidi-$($FRIBIDI_VERSION).tar.xz -OutFile fribidi.tar.xz
 xz -d fribidi.tar.xz
 tar -xf fribidi.tar
 Move-Item -Path fribidi-* -Destination fribidi -Force
 
 echo "Getting Harfbuzz"
-curl -L https://github.com/harfbuzz/harfbuzz/releases/download/$($HARFBUZZ_VERSION)/harfbuzz-$($HARFBUZZ_VERSION).tar.xz -OutFile harfbuzz.tar.xz
+curl https://github.com/harfbuzz/harfbuzz/releases/download/$($HARFBUZZ_VERSION)/harfbuzz-$($HARFBUZZ_VERSION).tar.xz -OutFile harfbuzz.tar.xz
 xz -d harfbuzz.tar.xz
 tar -xf harfbuzz.tar
 Move-Item -Path harfbuzz-* -Destination harfbuzz -Force
 
 echo "Getting Glib"
-curl -L https://ftp.gnome.org/pub/gnome/sources/glib/$(("$GLIB_VERSION" -split '\.')[0,1] -join ".")/glib-$GLIB_VERSION.tar.xz -OutFile glib.tar.xz
+curl https://ftp.gnome.org/pub/gnome/sources/glib/$(("$GLIB_VERSION" -split '\.')[0,1] -join ".")/glib-$GLIB_VERSION.tar.xz -OutFile glib.tar.xz
 xz -d glib.tar.xz
 tar -xf glib.tar
 Move-Item -Path glib-* -Destination glib -Force
