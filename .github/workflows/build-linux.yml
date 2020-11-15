@@ -6,12 +6,18 @@ jobs:
   build:    
     runs-on: ubuntu-latest
     container: quay.io/pypa/manylinux2010_${{matrix.container}}
+    env:
+      WORKSPACE: ${{ github.workspace }}
     strategy:
       fail-fast: false
       matrix:
         container: ["x86_64","i686"]
     steps:    
-      - uses: actions/checkout@v2
+      - name: Download Repo
+        run: |
+          curl -L https://github.com/naveen521kk/pango-cairo-build/archive/master.zip -o /opt/clone.zip
+          yum install 7z
+          7z x /opt/clone.zip -o$WORKSPACE
       - name: Build
         run: |
           python3 ci/linux-build.py
