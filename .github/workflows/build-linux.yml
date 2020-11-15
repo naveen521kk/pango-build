@@ -30,7 +30,6 @@ jobs:
           apt -y install software-properties-common
           add-apt-repository -y ppa:deadsnakes/ppa
           apt -y install python3.7
-          apt -y install python3.7-pip
           
       - name: Build
         run: |
