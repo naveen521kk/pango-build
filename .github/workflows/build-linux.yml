@@ -19,7 +19,7 @@ jobs:
           unzip clone.zip
       - name: Build
         run: |
-          python3 ci/linux-build.py
+          /opt/python/cp38-cp38/bin/python ci/linux-build.py
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
