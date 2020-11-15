@@ -26,10 +26,10 @@ jobs:
           mv pango-build-* pango-cairo
       - name: Setup-Python
         run: |
-          apt install software-properties-common
+          apt -y install software-properties-common
           add-apt-repository -y ppa:deadsnakes/ppa
-          apt install python3.7
-          apt install python3.7-pip
+          apt -y install python3.7
+          apt -y install python3.7-pip
           
       - name: Build
         run: |
