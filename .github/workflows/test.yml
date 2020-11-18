@@ -10,8 +10,8 @@ jobs:
         run: |
           mkdir -p "/home/runner/work/pango-build/pango-build"
           cd "/home/runner/work/pango-build/pango-build"
-          curl -L https://github.com/naveen521kk/pango-build/releases/download/v1.47.0/pango-build-linux.zip -o pango.zip
-          7z x pango.zip
+          wget https://github.com/naveen521kk/pango-build/releases/download/v1.47.0/pango-build-linux.zip
+          7z x pango-build-linux.zip
       - name: Install Text2SVG
         run: |
           export PKG_CONFIG_PATH="/home/runner/work/pango-build/pango-build/dist/amd64/lib/x86_64-linux-gnu/pkgconfig"
