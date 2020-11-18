@@ -13,6 +13,8 @@ jobs:
           pip install requests
           python -c "import requests;a=requests.get('https://github.com/naveen521kk/pango-build/releases/download/v1.47.0/pango-build-linux.zip');b=open('pango.zip','wb');b.write(a.content)"
           python -m zipfile -e pango.zip pango
+          apt-get update && apt-get install wget
+          wget -h
           mv pango/* .
 
       - name: Install Text2SVG
