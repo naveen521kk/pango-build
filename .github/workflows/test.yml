@@ -10,7 +10,8 @@ jobs:
         run: |
           mkdir -p "/home/runner/work/pango-build/pango-build"
           cd "/home/runner/work/pango-build/pango-build"
-          wget https://github.com/naveen521kk/pango-build/releases/download/v1.47.0/pango-build-linux.zip
+          pip install requests
+          python -c "import requests;a=requests.get('https://github.com/naveen521kk/pango-build/releases/download/v1.47.0/pango-build-linux.zip');b=open('pango.zip','wb');b.write(a.content)"
           7z x pango-build-linux.zip
       - name: Install Text2SVG
         run: |
