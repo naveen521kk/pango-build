@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Download Assets
         run: |
-          mkdir "/home/runner/work/pango-build/pango-build"
+          mkdir -p "/home/runner/work/pango-build/pango-build"
           cd "/home/runner/work/pango-build/pango-build"
           curl -L https://github.com/naveen521kk/pango-build/releases/download/v1.47.0/pango-build-linux.zip -o pango.zip
           7z x pango.zip
