@@ -1,0 +1,21 @@
+name: Build Linux
+on:
+  release:
+    types: [created]
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    container: python:3.6-slim
+    steps:
+      - name: Download Assets
+        run: |
+          mkdir "/home/runner/work/pango-build/pango-build"
+          cd "/home/runner/work/pango-build/pango-build"
+          curl -L https://github.com/naveen521kk/pango-build/releases/download/v1.47.0/pango-build-linux.zip -o pango.zip
+          7z x pango.zip
+      - name: Install Text2SVG
+        run: |
+          export PKG_CONFIG_PATH="/home/runner/work/pango-build/pango-build/dist/amd64/lib/x86_64-linux-gnu/pkgconfig"
+          pip install Cython
+          pip install text2svg --no-binary :all:
+  
