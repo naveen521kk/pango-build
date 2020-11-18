@@ -12,7 +12,7 @@ jobs:
           cd "/home/runner/work/pango-build/pango-build"
           pip install requests
           python -c "import requests;a=requests.get('https://github.com/naveen521kk/pango-build/releases/download/v1.47.0/pango-build-linux.zip');b=open('pango.zip','wb');b.write(a.content)"
-          python -m zipfile -e pango-build-linux.zip pango
+          python -m zipfile -e pango.zip pango
           mv pango/* .
           apt install wget
           wget -h
