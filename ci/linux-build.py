@@ -9,7 +9,7 @@ import argparse
 import requests
 
 #version to build
-COMMIT_RELEASE_CAIRO="ed98414686ede45a4f2302b4521dece51acdb785"
+COMMIT_RELEASE_CAIRO="fda1f07bdf8cc187eb81b0cb877e394ef74bdfaa"
 PANGO_VERSION="1.47.0"
 FRIBIDI_VERSION="1.0.10"
 HARFBUZZ_VERSION="2.7.2"
