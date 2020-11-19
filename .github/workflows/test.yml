@@ -4,7 +4,7 @@ on:
 jobs:
   container:
     runs-on: ubuntu-latest
-    container: python:3.6-slim
+    container: python:3.6
     steps:
       - name: Download Assets
         run: |
