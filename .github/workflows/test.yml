@@ -21,6 +21,8 @@ jobs:
         run: |
           export PATH="/home/runner/work/pango-build/pango-build/dist/amd64/pkg-config/bin:$PATH"
           export PKG_CONFIG_PATH="/home/runner/work/pango-build/pango-build/dist/amd64/lib/x86_64-linux-gnu/pkgconfig"
+          pkg-config --libs --cflags pangocairo
+          pkg-config --libs --cflags pangofc
           pip install Cython
           pip install text2svg --no-binary :all:
   
