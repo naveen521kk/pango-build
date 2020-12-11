@@ -52,7 +52,7 @@ meson setup --default-library=shared --prefix=C:\build\$arch --buildtype=release
 meson compile -C fribidi_builddir
 meson install --no-rebuild -C fribidi_builddir
 
-meson setup --default-library=shared --prefix=C:\build\$arch --buildtype=release -Dintrospection=false pango_builddir pango
+meson setup --default-library=shared --prefix=C:\build\$arch --buildtype=release -Dintrospection=disabled pango_builddir pango
 cd pango_builddir
 (Get-Content build.ninja) -replace '"/MD"','"/MT"' | Out-File build.ninja.patch
 Move-Item build.ninja.patch build.ninja -Force
