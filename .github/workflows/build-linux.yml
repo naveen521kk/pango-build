@@ -1,5 +1,6 @@
 name: Build Linux
 on:
+  push:
   release:
     types: [created]
 jobs:
