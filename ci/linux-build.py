@@ -144,7 +144,7 @@ def download_fribidi():
         tempdir = Path(tempdir)
         fname = tempdir / "fribidi.tar.gz"
         download(
-            f"https://github.com/fribidi/fribidi/releases/download/{FRIBIDI_VERSION}/fribidi-{FRIBIDI_VERSION}.tar.xz",
+            f"https://github.com/fribidi/fribidi/releases/download/v{FRIBIDI_VERSION}/fribidi-{FRIBIDI_VERSION}.tar.xz",
             fname,
         )
         with tarfile.open(fname, "r") as tar:

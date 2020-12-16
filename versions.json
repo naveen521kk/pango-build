@@ -2,6 +2,6 @@
     "pango": "1.48.0",
     "glib": "2.67.1",
     "cairo": "1.17.4",
-    "fribidi": "v1.0.10",
+    "fribidi": "1.0.10",
     "harfbuzz": "2.7.2"
 }

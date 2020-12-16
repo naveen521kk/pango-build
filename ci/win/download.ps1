@@ -28,7 +28,7 @@ tar -xf pango.tar
 Move-Item -Path pango-* -Destination pango -Force
 
 Write-Output "Getting Fribidi"
-curl https://github.com/fribidi/fribidi/releases/download/$($FRIBIDI_VERSION)/fribidi-$($FRIBIDI_VERSION).tar.xz -OutFile fribidi.tar.xz
+curl https://github.com/fribidi/fribidi/releases/download/v$($FRIBIDI_VERSION)/fribidi-$($FRIBIDI_VERSION).tar.xz -OutFile fribidi.tar.xz
 xz -d fribidi.tar.xz
 tar -xf fribidi.tar
 Move-Item -Path fribidi-* -Destination fribidi -Force
