@@ -37,7 +37,10 @@ class GithubHandler:
         logging.info(
             "Setting %s version  to %s", self.replace_in_files["name"], self.version
         )
-        version_info[self.replace_in_files["name"]] = self.version[1:] if self.version.startswith('v') else self.version
+        if self.replace_in_files["name"] == "glib":
+            version_info[self.replace_in_files["name"]] = "2.67.0"
+        else:    
+            version_info[self.replace_in_files["name"]] = self.version[1:] if self.version.startswith('v') else self.version
 
 
 class GitlabHandler:
