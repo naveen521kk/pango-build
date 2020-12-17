@@ -9,7 +9,7 @@ import argparse
 import requests
 import json
 
-with open(Path(__file__).parent.parent / "versions.json") as f:
+with open(Path(__file__).resolve().parent.parent / "versions.json") as f:
     versions = json.load(f)
 # version to build
 COMMIT_RELEASE_CAIRO = versions["cairo"]

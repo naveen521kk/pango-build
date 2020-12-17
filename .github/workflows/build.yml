@@ -5,6 +5,45 @@ on:
   schedule:
     - cron: "0 0 * * *"
 jobs:
+  update-version:
+    name: Update Version
+    runs-on: windows-2016
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Setup-Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Get Latest
+        run: |
+          cd updator
+          python -m pip install -r requirements.txt
+          python main.py
+      - name: Check for modified files
+        shell: bash
+        id: git-check
+        run: |
+          echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
+      - name: Commit Changes
+        shell: pwsh
+        if: steps.git-check.outputs.modified == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd updator
+          python -m pip install -r requirements.txt
+          git config --local user.email "49693820+naveen521kk@users.noreply.github.com"
+          git config --local user.name "Naveen"
+          git commit -m "$(python commit.py)" -a
+      - name: Push changes
+        if: steps.git-check.outputs.modified == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
   build-windows:
     name: Build Pango On Windows
     runs-on: windows-2016
@@ -69,7 +108,7 @@ jobs:
         with:
           python-version: "3.x"
       - name: Get Latest
-        run: | 
+        run: |
           cd updator
           pip install -r requirements.txt
           python main.py
@@ -92,6 +131,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: master
       - name: Setup-Python
         uses: actions/setup-python@v2
         with:
@@ -139,11 +180,11 @@ jobs:
           release_name: Release v${{ steps.get_version.outputs.pango }}
           body: |
             This release contains
-            - Pango ${{ steps.get_version.outputs.pango }}
-            - Cairo ${{ steps.get_version.outputs.cairo }}
-            - Glib ${{ steps.get_version.outputs.glib }}
-            - Fribidi ${{ steps.get_version.outputs.fribidi }}
-            - Farfbuzz ${{ steps.get_version.outputs.harfbuzz }}
+              - Pango ${{ steps.get_version.outputs.pango }}
+              - Cairo ${{ steps.get_version.outputs.cairo }}
+              - Glib ${{ steps.get_version.outputs.glib }}
+              - Fribidi ${{ steps.get_version.outputs.fribidi }}
+              - Farfbuzz ${{ steps.get_version.outputs.harfbuzz }}
           draft: false
           prerelease: false
       - name: Upload Release Asset

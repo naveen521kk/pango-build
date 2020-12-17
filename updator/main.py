@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import re
 from pathlib import Path
 
@@ -8,11 +9,15 @@ import yaml
 
 logging.basicConfig(level=logging.DEBUG)
 DEPS_FILE = Path(__file__).parent / "dependency.yml"
-FINAL_FILE = Path(__file__).parent.parent / "versions.json"
+FINAL_FILE = Path(__file__).resolve().parent.parent / "versions.json"
 with open(DEPS_FILE) as f:
     logging.debug("Opening File at %s", DEPS_FILE.absolute())
     deps_info = yaml.load(f, Loader=yaml.FullLoader)
 version_info = {}
+github_headers = {
+    "Accept": "application/vnd.github.v3+json",
+    "Authorization": f"token {os.getenv('GITHUB_TOKEN')}",
+}
 
 
 class GithubHandler:
@@ -25,7 +30,7 @@ class GithubHandler:
     def get_version(self) -> None:
         version_re = re.compile(self.replace_in_files["tag_filter"]["matching"])
         logging.debug("Getting %s", self.api_url)
-        content = requests.get(self.api_url).json()
+        content = requests.get(self.api_url, headers=github_headers).json()
         for version in content:
             matching = version_re.match(version["name"])
             if matching:
@@ -36,8 +41,10 @@ class GithubHandler:
     def update_file(self):
         logging.info(
             "Setting %s version  to %s", self.replace_in_files["name"], self.version
-        ) 
-        version_info[self.replace_in_files["name"]] = self.version[1:] if self.version.startswith('v') else self.version
+        )
+        version_info[self.replace_in_files["name"]] = (
+            self.version[1:] if self.version.startswith("v") else self.version
+        )
 
 
 class GitlabHandler:
@@ -62,7 +69,9 @@ class GitlabHandler:
         logging.info(
             "Setting %s version  to %s", self.replace_in_files["name"], self.version
         )
-        version_info[self.replace_in_files["name"]] = self.version[1:] if self.version.startswith('v') else self.version
+        version_info[self.replace_in_files["name"]] = (
+            self.version[1:] if self.version.startswith("v") else self.version
+        )
 
 
 for name in deps_info:
@@ -73,5 +82,4 @@ for name in deps_info:
         GithubHandler(lib["api_url"], replace_in_files=lib["replace_in_files"])
 
 with open(FINAL_FILE, "w") as f:
-
     data = json.dump(version_info, f, indent=4)

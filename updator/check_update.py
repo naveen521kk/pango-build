@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 
 access_token = os.getenv("GITHUB_TOKEN")
-FINAL_FILE = Path(__file__).parent.parent / "versions.json"
+FINAL_FILE = Path(__file__).resolve().parent.parent / "versions.json"
 API_URL = "https://api.github.com/repos/naveen521kk/pango-build/releases"
 headers = {
     "Accept": "application/vnd.github.v3+json",
