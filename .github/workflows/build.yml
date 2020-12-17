@@ -28,10 +28,10 @@ jobs:
         shell: bash
         id: git-check
         run: |
-          echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
+          echo "::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)"
       - name: Commit Changes
         shell: pwsh
-        if: steps.git-check.outputs.modified == 'true'
+        if: steps.git-check.outputs.modified == true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -41,7 +41,7 @@ jobs:
           git config --local user.name "Naveen"
           git commit -m "$(python commit.py)" -a
       - name: Push changes
-        if: steps.git-check.outputs.modified == 'true'
+        if: steps.git-check.outputs.modified == true
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
