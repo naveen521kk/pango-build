@@ -14,9 +14,9 @@ with open(FINAL_FILE, "r") as f:
     data = json.load(f)
 pango_version = data["pango"]
 
-content = requests.get(API_URL, headers).json()
-
-if content[0]["tag_name"] != f"v{pango_version}":
+content = requests.get(API_URL, headers=headers).json()
+tags = [i["tag_name"] for i in content]
+if f"v{pango_version}" not in tags:
     print("true")
 else:
     print("false")
