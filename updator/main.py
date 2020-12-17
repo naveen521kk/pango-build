@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import re
+from distutils.version import StrictVersion
 from pathlib import Path
 
 import requests
@@ -31,20 +32,21 @@ class GithubHandler:
         version_re = re.compile(self.replace_in_files["tag_filter"]["matching"])
         logging.debug("Getting %s", self.api_url)
         content = requests.get(self.api_url, headers=github_headers).json()
-        for version in content:
-            matching = version_re.match(version["name"])
-            if matching:
-                logging.info("Got Latest Version as %s", version["name"])
-                self.version = version["name"]
-                break
+        print(content)
+        if content[0]["name"].startswith("v"):
+            for i in range(len(content)):
+                content[i]["name"] = content[i]["name"][1:]
+        versions = [i["name"] for i in content if version_re.match(i["name"])]
+        versions.sort(key=StrictVersion)
+        version = versions[-1]
+        logging.info("Got Latest Version as %s", version)
+        self.version = version
 
     def update_file(self):
         logging.info(
             "Setting %s version  to %s", self.replace_in_files["name"], self.version
         )
-        version_info[self.replace_in_files["name"]] = (
-            self.version[1:] if self.version.startswith("v") else self.version
-        )
+        version_info[self.replace_in_files["name"]] = self.version
 
 
 class GitlabHandler:
@@ -58,20 +60,20 @@ class GitlabHandler:
         version_re = re.compile(self.replace_in_files["tag_filter"]["matching"])
         logging.debug("Getting %s", self.api_url)
         content = requests.get(self.api_url).json()
-        for version in content:
-            matching = version_re.match(version["name"])
-            if matching:
-                logging.info("Got Latest Version as %s", version["name"])
-                self.version = version["name"]
-                break
+        if content[0]["name"].startswith("v"):
+            for i in range(len(content)):
+                content[i]["name"] = content[i]["name"][1:]
+        versions = [i["name"] for i in content if version_re.match(i["name"])]
+        versions.sort(key=StrictVersion)
+        version = versions[-1]
+        logging.info("Got Latest Version as %s", version)
+        self.version = version
 
     def update_file(self):
         logging.info(
             "Setting %s version  to %s", self.replace_in_files["name"], self.version
         )
-        version_info[self.replace_in_files["name"]] = (
-            self.version[1:] if self.version.startswith("v") else self.version
-        )
+        version_info[self.replace_in_files["name"]] = self.version
 
 
 for name in deps_info:

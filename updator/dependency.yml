@@ -4,14 +4,14 @@ pango:
   replace_in_files:
     name: "pango"
     tag_filter:
-      matching: '([0-9]+)\.([0-9]+)\.([0-9]+)'
+      matching: '^([0-9]+)\.([0-9]+)\.([0-9]+)$'
 glib:
   type: gitlab
   api_url: https://gitlab.gnome.org/api/v4/projects/658/repository/tags
   replace_in_files:
     name: "glib"
     tag_filter:
-      matching: '([0-9]+)\.([0-9]+)\.([0-9]+)'
+      matching: '^([0-9]+)\.([0-9]+)\.([0-9]+)$'
 
 cairo:
   type: gitlab
@@ -19,7 +19,7 @@ cairo:
   replace_in_files:
     name: "cairo"
     tag_filter:
-      matching: '([0-9]+)\.([0-9]+)\.([0-9]+)'
+      matching: '^([0-9]+)\.([0-9]+)\.([0-9]+)$'
 
 fribidi:
   type: github
@@ -27,7 +27,7 @@ fribidi:
   replace_in_files:
     name: "fribidi"
     tag_filter:
-      matching: 'v([0-9]+)\.([0-9]+)\.([0-9]+)'
+      matching: '^([0-9]+)\.([0-9]+)\.([0-9]+)$'
 
 harfbuzz:
   type: github
@@ -35,4 +35,4 @@ harfbuzz:
   replace_in_files:
     name: "harfbuzz"
     tag_filter:
-      matching: '([0-9]+)\.([0-9]+)\.([0-9]+)'
+      matching: '^([0-9]+)\.([0-9]+)\.([0-9]+)$'
