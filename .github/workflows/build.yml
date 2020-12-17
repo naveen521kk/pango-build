@@ -3,7 +3,7 @@ on:
   push:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 0"
+    - cron: "0 0 * * *"
 jobs:
   build-windows:
     name: Build Pango On Windows
@@ -102,7 +102,8 @@ jobs:
           cd updator
           pip install -r requirements.txt
           $a=$(python check_update.py)
-          echo "::set-output name=update::$($a)"
+          echo $a
+          echo "::set-output name=update_things::$($a)"
       - name: Download Linux Build
         uses: actions/download-artifact@v1
         with:
@@ -126,7 +127,7 @@ jobs:
           echo "::set-output name=harfbuzz::$($version.harfbuzz)"
       - name: Create Release
         id: create_release
-        if: ${{ steps.check_release.outputs.update }} == "true"
+        if: ${{ steps.check_release.outputs.update_things }} == "true"
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -144,7 +145,7 @@ jobs:
           prerelease: false
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
-        if: ${{ steps.check_release.outputs.update }} == "true"
+        if: ${{ steps.check_release.outputs.update_things }} == "true"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -154,7 +155,7 @@ jobs:
           asset_content_type: application/zip
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
-        if: ${{ steps.check_release.outputs.update }} == "true"
+        if: ${{ steps.check_release.outputs.update_things }} == "true"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -164,7 +165,7 @@ jobs:
           asset_content_type: application/zip
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
-        if: ${{ steps.check_release.outputs.update }} == "true"
+        if: ${{ steps.check_release.outputs.update_things }} == "true"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
