@@ -121,7 +121,7 @@ jobs:
           python3 -m pip install -U pip
           python3 -m pip install requests
           python3 ci/linux-build.py amd64
-          7z a pango-build-linux.zip dist/*
+          7z a pango-build-linux.zip dist/amd64/*
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
