@@ -8,6 +8,8 @@ jobs:
   update-version:
     name: Update Version
     runs-on: windows-2016
+    env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -50,13 +52,14 @@ jobs:
     env:
       MSYS2_PATH_TYPE: inherit
       WORKSPACE: ${{ github.workspace }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Setup-Python
         uses: actions/setup-python@v2
         with:
           python-version: "3.x"
-      - name: Update $version
+      - name: Update Version
         run: |
           cd updator
           pip install -r requirements.txt
@@ -98,6 +101,7 @@ jobs:
     runs-on: ubuntu-16.04
     env:
       WORKSPACE: ${{ github.workspace }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Install expat
