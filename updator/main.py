@@ -36,11 +36,8 @@ class GithubHandler:
     def update_file(self):
         logging.info(
             "Setting %s version  to %s", self.replace_in_files["name"], self.version
-        )
-        if self.replace_in_files["name"] == "glib":
-            version_info[self.replace_in_files["name"]] = "2.67.0"
-        else:    
-            version_info[self.replace_in_files["name"]] = self.version[1:] if self.version.startswith('v') else self.version
+        ) 
+        version_info[self.replace_in_files["name"]] = self.version[1:] if self.version.startswith('v') else self.version
 
 
 class GitlabHandler:
@@ -65,10 +62,7 @@ class GitlabHandler:
         logging.info(
             "Setting %s version  to %s", self.replace_in_files["name"], self.version
         )
-        if self.replace_in_files["name"] == "glib":
-            version_info[self.replace_in_files["name"]] = "2.67.0"
-        else:    
-            version_info[self.replace_in_files["name"]] = self.version[1:] if self.version.startswith('v') else self.version
+        version_info[self.replace_in_files["name"]] = self.version[1:] if self.version.startswith('v') else self.version
 
 
 for name in deps_info:
