@@ -48,7 +48,8 @@ Move-Item -Path glib-* -Destination glib -Force
 Write-Output "Setting Up Meson and Ninja"
 $env:PATH = "C:\Python38-x64;C:\Python38-x64\Scripts;$env:PATH"
 python -m pip install --upgrade pip
-pip install --upgrade meson==0.55.3 ninja
+pip install --upgrade ninja
+pip install --upgrade https://github.com/naveen521kk/meson/archive/patch-1.zip
       
 Write-Output "Copying x86 files"
 mkdir x86
