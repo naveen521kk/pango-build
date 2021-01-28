@@ -59,6 +59,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.x"
+          architecture: "x86"
       - name: Update Version
         run: |
           cd updator
@@ -74,6 +75,11 @@ jobs:
           & "$env:WORKSPACE\ci\win\build.ps1" 32
           $env:PATH=$prevPath
           cd ../
+      - name: Setup-Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+          architecture: "x64"
       - name: Build x64
         run: |
           cd x64

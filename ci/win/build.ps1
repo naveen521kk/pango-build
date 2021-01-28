@@ -18,6 +18,11 @@ if ($installationPath -and (test-path "$installationPath\Common7\Tools\vsdevcmd.
         set-content env:\"$name" $value
     }
 }
+
+Write-Output "Setting Up Meson and Ninja"
+python -m pip install --upgrade pip
+pip install --upgrade https://github.com/naveen521kk/meson/archive/patch-2.zip ninja
+
 if ($arch -eq "x86"){
     $env:PKG_CONFIG_PATH=""
     meson setup --prefix=C:\build\pkg-config --buildtype=release -Dtests=false pkg_conf_build pkgconf
@@ -27,8 +32,6 @@ if ($arch -eq "x86"){
     Rename-Item C:\build\pkg-config\bin\pkgconf.exe pkg-config.exe -Force
 }
 $env:PATH="C:\build\pkg-config\bin;$env:PATH"
-# Apply Patch to cairo meson.build
-#& "C:\Program Files\Git\bin\bash" -lc "patch -u cairo/meson.build ../patches/cairo.meson.build.patch"
 
 meson setup --default-library=shared --prefix=C:\build\$arch --buildtype=release glib_builddir glib
 meson compile -C glib_builddir
@@ -36,11 +39,10 @@ meson install --no-rebuild -C glib_builddir
 $env:PATH="C:\build\$arch\bin;$env:PATH"
 $env:PKG_CONFIG_PATH="C:\build\$arch\lib\pkgconfig;"
 
+Write-Output "Updating Meson"
+pip install -U https://github.com/naveen521kk/meson/archive/0.56.zip
+
 meson setup --default-library=shared --prefix=C:\build\$arch --buildtype=release -Dfontconfig=enabled -Dfreetype=enabled -Dglib=enabled -Dzlib=enabled -Dtee=enabled cairo_builddir cairo
-cd cairo_builddir
-(Get-Content build.ninja) -replace '"/MD"','"/MT"' | Out-File build.ninja.patch
-Move-Item build.ninja.patch build.ninja -Force
-cd ../
 meson compile -C cairo_builddir
 meson install --no-rebuild -C cairo_builddir
 
@@ -53,10 +55,6 @@ meson compile -C fribidi_builddir
 meson install --no-rebuild -C fribidi_builddir
 
 meson setup --default-library=shared --prefix=C:\build\$arch --buildtype=release -Dintrospection=disabled pango_builddir pango
-cd pango_builddir
-(Get-Content build.ninja) -replace '"/MD"','"/MT"' | Out-File build.ninja.patch
-Move-Item build.ninja.patch build.ninja -Force
-cd ../
 meson compile -C pango_builddir
 meson install --no-rebuild -C pango_builddir
 
