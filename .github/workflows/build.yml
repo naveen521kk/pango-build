@@ -34,7 +34,9 @@ jobs:
         if: steps.git-check.outputs.modified == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          update: ${{ steps.git-check.outputs.modified }}
         run: |
+          echo $update
           cd updator
           python -m pip install -r requirements.txt
           git config --local user.email "49693820+naveen521kk@users.noreply.github.com"
