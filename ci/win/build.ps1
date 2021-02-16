@@ -61,7 +61,7 @@ meson setup --default-library=shared --prefix=C:\build\$arch --buildtype=release
 meson compile -C fontconfig_builddir
 meson install --no-rebuild -C fontconfig_builddir
 
-meson setup --default-library=shared --prefix=C:\build\$arch --buildtype=release -Dfontconfig=enabled -Dfreetype=enabled -Dglib=enabled -Dzlib=enabled -Dtee=enabled cairo_builddir cairo
+meson setup --default-library=shared --prefix=C:\build\$arch --force-fallback-for=libpng --buildtype=release -Dfontconfig=enabled -Dfreetype=enabled -Dglib=enabled -Dzlib=enabled -Dtee=enabled cairo_builddir cairo
 meson compile -C cairo_builddir
 meson install --no-rebuild -C cairo_builddir
 
