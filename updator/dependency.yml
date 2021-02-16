@@ -36,3 +36,11 @@ harfbuzz:
     name: "harfbuzz"
     tag_filter:
       matching: '^([0-9]+)\.([0-9]+)\.([0-9]+)$'
+
+fontconfig:
+  type: gitlab
+  api_url: https://gitlab.freedesktop.org/api/v4/projects/890/repository/tags
+  replace_in_files:
+    name: "fontconfig"
+    tag_filter:
+      matching: '^([0-9]+)\.([0-9]+)\.([0-9]+)$'

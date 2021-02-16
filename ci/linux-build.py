@@ -38,7 +38,7 @@ parser = argparse.ArgumentParser(description="Build Pango and Cairo")
 parser.add_argument(
     "arch",
     type=str,
-    help="The archistruture to build. On windows, vscode environment should be opened accordingly.",
+    help="The architruture to build. On windows, vscode environment should be opened accordingly.",
     choices=["amd64", "i686"],
     default="amd64",
 )

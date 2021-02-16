@@ -19,6 +19,7 @@ $PANGO_VERSION = $versions.pango
 $FRIBIDI_VERSION = $versions.fribidi
 $HARFBUZZ_VERSION = $versions.harfbuzz
 $GLIB_VERSION = $versions.glib
+$FONTCONFIG_VERSION = $versions.fontconfig
 
 Write-Output "Getting Cairo"
 curl https://gitlab.freedesktop.org/cairo/cairo/-/archive/$($COMMIT_RELEASE)/cairo-$($COMMIT_RELEASE).tar.gz -o cairo.tar.gz
@@ -59,7 +60,11 @@ xz -d glib.tar.xz
 tar -xf glib.tar
 Move-Item -Path glib-* -Destination glib -Force
 
-      
+Write-Output "Getting FontConfig"
+curl https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/$($FONTCONFIG_VERSION)/fontconfig-$($FONTCONFIG_VERSION).tar.gz -o fontconfig.tar.gz
+tar -xf fontconfig.tar.gz
+Move-Item -Path fontconfig-$FONTCONFIG_VERSION -Destination fontconfig -Force
+
 Write-Output "Copying x86 files"
 mkdir x86
 Set-Location x86
@@ -69,6 +74,7 @@ Copy-Item -Path "$PWD\..\fribidi" -Destination "$PWD\fribidi" -Recurse
 Copy-Item -Path "$PWD\..\harfbuzz" -Destination "$PWD\harfbuzz" -Recurse
 Copy-Item -Path "$PWD\..\pkgconf" -Destination "$PWD\pkgconf" -Recurse
 Copy-Item -Path "$PWD\..\glib" -Destination "$PWD\glib" -Recurse
+Copy-Item -Path "$PWD\..\fontconfig" -Destination "$PWD\fontconfig" -Recurse
 Set-Location ../
 
 Write-Output "Copying x64 files"
@@ -80,4 +86,5 @@ Copy-Item -Path "$PWD\..\fribidi" -Destination "$PWD\fribidi" -Recurse
 Copy-Item -Path "$PWD\..\harfbuzz" -Destination "$PWD\harfbuzz" -Recurse
 Copy-Item -Path "$PWD\..\pkgconf" -Destination "$PWD\pkgconf" -Recurse
 Copy-Item -Path "$PWD\..\glib" -Destination "$PWD\glib" -Recurse
+Copy-Item -Path "$PWD\..\fontconfig" -Destination "$PWD\fontconfig" -Recurse
 Set-Location ../

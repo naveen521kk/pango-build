@@ -57,6 +57,10 @@ $env:PKG_CONFIG_PATH="C:\build\$arch\lib\pkgconfig;"
 Write-Output "Updating Meson"
 pip install -U https://github.com/naveen521kk/meson/archive/0.56.zip
 
+meson setup --default-library=shared --prefix=C:\build\$arch --buildtype=release -Dtests=disabled fontconfig_builddir fontconfig
+meson compile -C fontconfig_builddir
+meson install --no-rebuild -C fontconfig_builddir
+
 meson setup --default-library=shared --prefix=C:\build\$arch --buildtype=release -Dfontconfig=enabled -Dfreetype=enabled -Dglib=enabled -Dzlib=enabled -Dtee=enabled cairo_builddir cairo
 meson compile -C cairo_builddir
 meson install --no-rebuild -C cairo_builddir
