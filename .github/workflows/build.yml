@@ -199,7 +199,7 @@ jobs:
               - Cairo ${{ steps.get_version.outputs.cairo }}
               - Glib ${{ steps.get_version.outputs.glib }}
               - Fribidi ${{ steps.get_version.outputs.fribidi }}
-              - Farfbuzz ${{ steps.get_version.outputs.harfbuzz }}
+              - Harfbuzz ${{ steps.get_version.outputs.harfbuzz }}
               - FontConfig ${{ steps.get_version.outputs.fontconfig }}
           draft: false
           prerelease: false
