@@ -107,7 +107,7 @@ jobs:
 
   build-linux:
     name: Build Pango On Ubuntu
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     env:
       WORKSPACE: ${{ github.workspace }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
