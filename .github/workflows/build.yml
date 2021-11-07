@@ -7,7 +7,7 @@ on:
 jobs:
   update-version:
     name: Update Version
-    runs-on: windows-2016
+    runs-on: windows-2019
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -51,7 +51,7 @@ jobs:
           branch: master
   build-windows:
     name: Build Pango On Windows
-    runs-on: windows-2016
+    runs-on: windows-2019
     env:
       MSYS2_PATH_TYPE: inherit
       WORKSPACE: ${{ github.workspace }}
