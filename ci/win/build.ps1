@@ -35,7 +35,7 @@ if ($installationPath -and (test-path "$installationPath\Common7\Tools\vsdevcmd.
 }
 
 Write-Output "Setting Up Meson and Ninja"
-python -m pip install --upgrade pip
+python -m pip install 'pip==21.*'
 pip install --upgrade https://github.com/naveen521kk/meson/archive/patch-2.zip ninja
 
 if ($arch -eq "x86"){
