@@ -1,8 +1,8 @@
 {
     "pango": "1.50.10",
-    "glib": "2.72.3",
+    "glib": "2.74.0",
     "cairo": "1.17.6",
     "fribidi": "1.0.12",
-    "harfbuzz": "5.1.0",
+    "harfbuzz": "5.2.0",
     "fontconfig": "2.14.0"
 }
