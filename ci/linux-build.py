@@ -116,7 +116,26 @@ def download_cairo():
             fname,
         )
         with tarfile.open(fname, "r:gz") as tar:
-            tar.extractall(tempdir)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar, tempdir)
         shutil.move(
             str(tempdir / f"cairo-{COMMIT_RELEASE_CAIRO}"), str(build_dir / "cairo")
         )
@@ -132,7 +151,26 @@ def download_pango():
             fname,
         )
         with tarfile.open(fname, "r") as tar:
-            tar.extractall(tempdir)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar, tempdir)
         shutil.move(tempdir / f"pango-{PANGO_VERSION}", build_dir / "pango")
 
 
@@ -146,7 +184,26 @@ def downnload_pkg_config():
             fname,
         )
         with tarfile.open(fname, "r") as tar:
-            tar.extractall(tempdir)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar, tempdir)
         shutil.move(
             tempdir / f"pkgconf-pkgconf-{PKG_CONFIG_VERSION}", build_dir / "pkgconf"
         )
@@ -162,7 +219,26 @@ def download_fribidi():
             fname,
         )
         with tarfile.open(fname, "r") as tar:
-            tar.extractall(tempdir)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar, tempdir)
         shutil.move(tempdir / f"fribidi-{FRIBIDI_VERSION}", build_dir / "fribidi")
 
 
@@ -176,7 +252,26 @@ def download_harfbuzz():
             fname,
         )
         with tarfile.open(fname, "r") as tar:
-            tar.extractall(tempdir)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar, tempdir)
         shutil.move(tempdir / f"harfbuzz-{HARFBUZZ_VERSION}", build_dir / "harfbuzz")
 
 
@@ -190,7 +285,26 @@ def download_glib():
             fname,
         )
         with tarfile.open(fname, "r") as tar:
-            tar.extractall(tempdir)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar, tempdir)
         shutil.move(tempdir / f"glib-{GLIB_VERSION}", build_dir / "glib")
 
 
