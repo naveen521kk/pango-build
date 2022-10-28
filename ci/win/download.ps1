@@ -57,7 +57,7 @@ Move-Item -Path harfbuzz-* -Destination harfbuzz -Force
 Write-Output "Getting Glib"
 curl https://ftp.gnome.org/pub/gnome/sources/glib/$(("$GLIB_VERSION" -split '\.')[0,1] -join ".")/glib-$GLIB_VERSION.tar.xz -OutFile glib.tar.xz
 xz -d glib.tar.xz
-tar -xf glib.tar
+tar -h -xf glib.tar
 Move-Item -Path glib-* -Destination glib -Force
 
 Write-Output "Getting FontConfig"
