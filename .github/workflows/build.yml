@@ -163,15 +163,15 @@ jobs:
           python check_update.py
           echo "::set-output name=update_things::$a"
       - name: Download Linux Build
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: pango-build-linux
       - name: Download Windows Build x64
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: pango-build-x64
       - name: Download Windows Build x86
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: pango-build-x86
       - name: Get Release Details
