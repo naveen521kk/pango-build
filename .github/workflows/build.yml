@@ -95,12 +95,12 @@ jobs:
           7z a pango-build-x86.zip C:\build\x86\*
           7z a pango-build-x64.zip C:\build\amd64\*
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: pango-build-x86
           path: pango-build-x86.zip
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: pango-build-x64
           path: pango-build-x64.zip
@@ -133,7 +133,7 @@ jobs:
           cd dist/amd64
           7z a pango-build-linux.zip *
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: pango-build-linux
           path: dist/amd64/pango-build-linux.zip
