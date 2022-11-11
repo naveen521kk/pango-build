@@ -12,15 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
+
 import json
 import logging
 import os
 import re
-from distutils.version import StrictVersion
+from packaging.version import Version
 from pathlib import Path
 
 import requests
 import yaml
+import version_filters
 
 logging.basicConfig(level=logging.DEBUG)
 DEPS_FILE = Path(__file__).parent / "dependency.yml"
@@ -36,9 +39,15 @@ github_headers = {
 
 
 class GithubHandler:
-    def __init__(self, api_url: str = None, replace_in_files: dict = None) -> None:
+    def __init__(
+        self,
+        api_url: str,
+        replace_in_files: dict,
+        version_filters: version_filters.VersionFilter,
+    ) -> None:
         self.api_url = api_url
         self.replace_in_files = replace_in_files
+        self.version_filters = version_filters
         self.get_version()
         self.update_file()
 
@@ -50,11 +59,15 @@ class GithubHandler:
         if content[0]["name"].startswith("v"):
             for i in range(len(content)):
                 content[i]["name"] = content[i]["name"][1:]
-        versions = [i["name"] for i in content if version_re.match(i["name"])]
-        versions.sort(key=StrictVersion)
+        versions = [Version(i["name"]) for i in content if version_re.match(i["name"])]
+        versions.sort()
+        if self.version_filters.odd_minor_development:
+            versions = [
+                i for i in versions if version_filters.is_odd_minor_development(i)
+            ]
         version = versions[-1]
         logging.info("Got Latest Version as %s", version)
-        self.version = version
+        self.version = str(version)
 
     def update_file(self):
         logging.info(
@@ -64,9 +77,15 @@ class GithubHandler:
 
 
 class GitlabHandler:
-    def __init__(self, api_url: str = None, replace_in_files: dict = None) -> None:
+    def __init__(
+        self,
+        api_url: str,
+        replace_in_files: dict,
+        version_filters: version_filters.VersionFilter,
+    ) -> None:
         self.api_url = api_url
         self.replace_in_files = replace_in_files
+        self.version_filters = version_filters
         self.get_version()
         self.update_file()
 
@@ -77,11 +96,15 @@ class GitlabHandler:
         if content[0]["name"].startswith("v"):
             for i in range(len(content)):
                 content[i]["name"] = content[i]["name"][1:]
-        versions = [i["name"] for i in content if version_re.match(i["name"])]
-        versions.sort(key=StrictVersion)
+        versions = [Version(i["name"]) for i in content if version_re.match(i["name"])]
+        versions.sort()
+        if self.version_filters.odd_minor_development:
+            versions = [
+                i for i in versions if not version_filters.is_odd_minor_development(i)
+            ]
         version = versions[-1]
         logging.info("Got Latest Version as %s", version)
-        self.version = version
+        self.version = str(version)
 
     def update_file(self):
         logging.info(
@@ -93,9 +116,21 @@ class GitlabHandler:
 for name in deps_info:
     lib = deps_info[name]
     if lib["type"] == "gitlab":
-        GitlabHandler(lib["api_url"], replace_in_files=lib["replace_in_files"])
+        GitlabHandler(
+            lib["api_url"],
+            replace_in_files=lib["replace_in_files"],
+            version_filters=version_filters.VersionFilter(
+                **{i: True for i in (lib["version_filters"] or [])}
+            ),
+        )
     else:
-        GithubHandler(lib["api_url"], replace_in_files=lib["replace_in_files"])
+        GithubHandler(
+            lib["api_url"],
+            replace_in_files=lib["replace_in_files"],
+            version_filters=version_filters.VersionFilter(
+                **{i: True for i in (lib["version_filters"] or [])}
+            ),
+        )
 
 with open(FINAL_FILE, "w") as f:
     data = json.dump(version_info, f, indent=4)

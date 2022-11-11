@@ -1,6 +1,8 @@
 pango:
   type: gitlab
   api_url: https://gitlab.gnome.org/api/v4/projects/1515/repository/tags
+  version_filters:
+    - odd_minor_development
   replace_in_files:
     name: "pango"
     tag_filter:
@@ -8,6 +10,8 @@ pango:
 glib:
   type: gitlab
   api_url: https://gitlab.gnome.org/api/v4/projects/658/repository/tags
+  version_filters:
+    - odd_minor_development
   replace_in_files:
     name: "glib"
     tag_filter:
@@ -16,6 +20,9 @@ glib:
 cairo:
   type: gitlab
   api_url: https://gitlab.freedesktop.org/api/v4/projects/956/repository/tags
+  version_filters:
+    # Though cairo follows odd minors development scheme, we'll use the development version
+    # - odd_minor_development
   replace_in_files:
     name: "cairo"
     tag_filter:
@@ -24,6 +31,7 @@ cairo:
 fribidi:
   type: github
   api_url: https://api.github.com/repos/fribidi/fribidi/tags
+  version_filters:
   replace_in_files:
     name: "fribidi"
     tag_filter:
@@ -32,6 +40,7 @@ fribidi:
 harfbuzz:
   type: github
   api_url: https://api.github.com/repos/harfbuzz/harfbuzz/tags
+  version_filters:
   replace_in_files:
     name: "harfbuzz"
     tag_filter:
@@ -40,6 +49,7 @@ harfbuzz:
 fontconfig:
   type: gitlab
   api_url: https://gitlab.freedesktop.org/api/v4/projects/890/repository/tags
+  version_filters:
   replace_in_files:
     name: "fontconfig"
     tag_filter:
