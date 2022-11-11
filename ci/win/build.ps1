@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+$ErrorActionPreference = "Stop"
 
 param($arch)
 Write-Output "Setting enviroment variable using vswhere"

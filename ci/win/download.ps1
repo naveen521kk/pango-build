@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+$ErrorActionPreference = "Stop"
+
 #note: Should be invoked from root of repo
 $versions = Get-Content .\versions.json | ConvertFrom-Json 
 $COMMIT_RELEASE = $versions.cairo
@@ -57,7 +59,7 @@ Move-Item -Path harfbuzz-* -Destination harfbuzz -Force
 Write-Output "Getting Glib"
 curl https://ftp.gnome.org/pub/gnome/sources/glib/$(("$GLIB_VERSION" -split '\.')[0,1] -join ".")/glib-$GLIB_VERSION.tar.xz -OutFile glib.tar.xz
 xz -d glib.tar.xz
-tar -h -xf glib.tar
+tar -xf glib.tar
 Move-Item -Path glib-* -Destination glib -Force
 
 Write-Output "Getting FontConfig"
