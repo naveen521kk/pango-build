@@ -68,23 +68,23 @@ Move-Item -Path fontconfig-$FONTCONFIG_VERSION -Destination fontconfig -Force
 Write-Output "Copying x86 files"
 mkdir x86
 Set-Location x86
-Copy-Item -Path "$PWD\..\cairo" -Destination "$PWD\cairo" -Recurse
-Copy-Item -Path "$PWD\..\pango" -Destination "$PWD\pango" -Recurse
-Copy-Item -Path "$PWD\..\fribidi" -Destination "$PWD\fribidi" -Recurse
-Copy-Item -Path "$PWD\..\harfbuzz" -Destination "$PWD\harfbuzz" -Recurse
-Copy-Item -Path "$PWD\..\pkgconf" -Destination "$PWD\pkgconf" -Recurse
-Copy-Item -Path "$PWD\..\glib" -Destination "$PWD\glib" -Recurse
-Copy-Item -Path "$PWD\..\fontconfig" -Destination "$PWD\fontconfig" -Recurse
+Copy-Item -Path "$PWD\..\cairo" -Destination "$PWD\cairo" -Recurse -Force
+Copy-Item -Path "$PWD\..\pango" -Destination "$PWD\pango" -Recurse -Force
+Copy-Item -Path "$PWD\..\fribidi" -Destination "$PWD\fribidi" -Recurse -Force
+Copy-Item -Path "$PWD\..\harfbuzz" -Destination "$PWD\harfbuzz" -Recurse -Force
+Copy-Item -Path "$PWD\..\pkgconf" -Destination "$PWD\pkgconf" -Recurse -Force
+Copy-Item -Path "$PWD\..\glib" -Destination "$PWD\glib" -Recurse -Force
+Copy-Item -Path "$PWD\..\fontconfig" -Destination "$PWD\fontconfig" -Recurse -Force
 Set-Location ../
 
 Write-Output "Copying x64 files"
 mkdir x64
 Set-Location x64
-Copy-Item -Path "$PWD\..\cairo" -Destination "$PWD\cairo" -Recurse
-Copy-Item -Path "$PWD\..\pango" -Destination "$PWD\pango" -Recurse
-Copy-Item -Path "$PWD\..\fribidi" -Destination "$PWD\fribidi" -Recurse
-Copy-Item -Path "$PWD\..\harfbuzz" -Destination "$PWD\harfbuzz" -Recurse
-Copy-Item -Path "$PWD\..\pkgconf" -Destination "$PWD\pkgconf" -Recurse
-Copy-Item -Path "$PWD\..\glib" -Destination "$PWD\glib" -Recurse
-Copy-Item -Path "$PWD\..\fontconfig" -Destination "$PWD\fontconfig" -Recurse
+Copy-Item -Path "$PWD\..\cairo" -Destination "$PWD\cairo" -Recurse -Force
+Copy-Item -Path "$PWD\..\pango" -Destination "$PWD\pango" -Recurse -Force
+Copy-Item -Path "$PWD\..\fribidi" -Destination "$PWD\fribidi" -Recurse -Force
+Copy-Item -Path "$PWD\..\harfbuzz" -Destination "$PWD\harfbuzz" -Recurse -Force
+Copy-Item -Path "$PWD\..\pkgconf" -Destination "$PWD\pkgconf" -Recurse -Force
+Copy-Item -Path "$PWD\..\glib" -Destination "$PWD\glib" -Recurse -Force
+Copy-Item -Path "$PWD\..\fontconfig" -Destination "$PWD\fontconfig" -Recurse -Force
 Set-Location ../
