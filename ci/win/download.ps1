@@ -58,13 +58,12 @@ Move-Item -Path harfbuzz-* -Destination harfbuzz -Force
 
 Write-Output "Getting Glib"
 curl https://ftp.gnome.org/pub/gnome/sources/glib/$(("$GLIB_VERSION" -split '\.')[0,1] -join ".")/glib-$GLIB_VERSION.tar.xz -OutFile glib.tar.xz
-7z x glib.tar.xz
-7z x glib.tar
+& "C:\Program Files\Git\usr\bin\tar.exe" -xf glib.tar.xz
+
 # # Some files in Glib are symlinks which makes my life difficult
 # # So I am just going to delete them
 # Remove-Item -Path glib-$GLIB_VERSION/glib/COPYING -Recurse -Force
 # Remove-Item -Path glib-$GLIB_VERSION/glib/gmodule/COPYING -Recurse -Force
-
 Move-Item -Path glib-* -Destination glib -Force
 
 Write-Output "Getting FontConfig"
