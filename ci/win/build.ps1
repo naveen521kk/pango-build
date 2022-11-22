@@ -13,7 +13,7 @@
 # limitations under the License.
 $ErrorActionPreference = "Stop"
 
-param($arch)
+$arch=$args[0]
 Write-Output "Setting enviroment variable using vswhere"
 if ($arch -eq 32) {
     Write-Output "Builing 32 bit-binaries"
