@@ -4,5 +4,5 @@
     "cairo": "1.17.6",
     "fribidi": "1.0.12",
     "harfbuzz": "6.0.0",
-    "fontconfig": "2.14.1"
+    "fontconfig": "2.14.2"
 }
