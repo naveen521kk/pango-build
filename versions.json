@@ -2,7 +2,7 @@
     "pango": "1.50.14",
     "glib": "2.76.2",
     "cairo": "1.17.8",
-    "fribidi": "1.0.12",
+    "fribidi": "1.0.13",
     "harfbuzz": "7.3.0",
     "fontconfig": "2.14.2"
 }
