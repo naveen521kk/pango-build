@@ -16,7 +16,7 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       - name: Setup-Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.9"
       - name: Get Latest
@@ -59,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup-Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
           architecture: "x86"
@@ -79,7 +79,7 @@ jobs:
           $env:PATH=$prevPath
           cd ../
       - name: Setup-Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
           architecture: "x64"
@@ -117,7 +117,7 @@ jobs:
         run: |
           sudo apt-get install -y gperf
       - name: Setup-Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
       - name: Get Latest
@@ -148,7 +148,7 @@ jobs:
         with:
           ref: master
       - name: Setup-Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
       - name: Check Release
