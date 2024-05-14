@@ -3,6 +3,6 @@
     "glib": "2.80.2",
     "cairo": "1.18.0",
     "fribidi": "1.0.14",
-    "harfbuzz": "8.4.0",
+    "harfbuzz": "8.5.0",
     "fontconfig": "2.15.0"
 }
