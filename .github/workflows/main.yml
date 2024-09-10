@@ -1,0 +1,215 @@
+name: Build Pango
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  build-x86:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch : x86
+      - name: Build Pango x86
+        run: |
+          cd pango-build
+          meson setup build-pango-x86 `
+            --prefix=$env:GITHUB_WORKSPACE/prefix-pango-32
+          meson compile -C build-pango-x86
+          meson install -C build-pango-x86
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pango-build-x86
+          path: prefix-pango-32/
+
+  build-x64:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch : x64
+      - name: Build Pango x64
+        run: |
+          cd pango-build
+          meson setup build-pango-x64 `
+            --prefix=$env:GITHUB_WORKSPACE/prefix-pango-64
+          meson compile -C build-pango-x64
+          meson install -C build-pango-x64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pango-build-x64
+          path: prefix-pango-64/
+
+  build-arm64:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch : amd64_arm64
+      - name: Build Pango arm64
+        run: |
+          cd pango-build
+          meson setup build-pango-arm64 `
+            -Dpixman:a64-neon=disabled `
+            -Dpixman:iwmmxt=disabled `
+            -Dpixman:mmx=disabled `
+            --prefix=$env:GITHUB_WORKSPACE/prefix-pango-arm64 `
+            --cross-file ../.ci/cross_amd64_arm64.txt
+          meson compile -C build-pango-arm64
+          meson install -C build-pango-arm64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pango-build-arm64
+          path: prefix-pango-arm64/
+
+  build-pkgconf:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch : x64
+      - name: Build pkgconf
+        run: |
+          cd pkgconf-build
+          meson setup build-x64 `
+            --prefix=$env:GITHUB_WORKSPACE/prefix-pkgconf
+          meson compile -C build-x64
+          meson install -C build-x64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pkgconf-build
+          path: prefix-pkgconf/
+
+
+  release:
+    permissions:
+      contents: write
+    runs-on: windows-latest
+    needs: [build-x86, build-x64, build-arm64, build-pkgconf]
+    if: github.event_name == 'release'
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: pango-build-x86
+          path: pango-x86/
+      - uses: actions/download-artifact@v4
+        with:
+          name: pango-build-x64
+          path: pango-x64/
+      - uses: actions/download-artifact@v4
+        with:
+          name: pango-build-arm64
+          path: pango-arm64/
+      - uses: actions/download-artifact@v4
+        with:
+          name: pkgconf-build
+          path: pkgconf/
+      - run: pip install requests
+      - name: Get Upload URL
+        id: create_release
+        shell: python
+        env:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_act: ${{ github.ref }}
+          REPO_NAME: ${{ github.repository }}
+        run: |
+          import requests
+          import os
+          ref_tag = os.getenv('tag_act').split('/')[-1]
+          repo_name = os.getenv('REPO_NAME', 'pygobject/pango-win-build')
+          access_token = os.getenv('access_token')
+          headers = {
+              "Accept":"application/vnd.github.v3+json",
+              "Authorization": f"token {access_token}"
+          }
+          url = f"https://api.github.com/repos/{repo_name}/releases/tags/{ref_tag}"
+          c = requests.get(url, headers=headers)
+          upload_url=c.json()['upload_url']
+          print(f"::set-output name=upload_url::{upload_url}")
+          print(f"::set-output name=tag_name::{ref_tag}")
+          print(f"::set-output name=file_name_pango_x86::pango-{ref_tag}-x86.zip")
+          print(f"::set-output name=file_name_pango_x64::pango-{ref_tag}-x64.zip")
+          print(f"::set-output name=file_name_pango_arm64::pango-{ref_tag}-arm64.zip")
+
+      - name: Zip it
+        shell: bash
+        env:
+          file_name_pango_x86: ${{ steps.create_release.outputs.file_name_pango_x86 }}
+          file_name_pango_x64: ${{ steps.create_release.outputs.file_name_pango_x64 }}
+          file_name_pango_arm64: ${{ steps.create_release.outputs.file_name_pango_arm64 }}
+        run: |
+          7z a $file_name_pango_x86 pango-x86/*
+          7z a $file_name_pango_x64 pango-x64/*
+          7z a $file_name_pango_arm64 pango-arm64/*
+          7z a pkgconf.zip pkgconf/
+
+      - name: Upload Release Asset (pango-x86)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.create_release.outputs.file_name_pango_x86 }}
+          asset_name: ${{ steps.create_release.outputs.file_name_pango_x86 }}
+          asset_content_type: application/zip
+      - name: Upload Release Asset (pango-x64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.create_release.outputs.file_name_pango_x64 }}
+          asset_name: ${{ steps.create_release.outputs.file_name_pango_x64 }}
+          asset_content_type: application/zip
+      - name: Upload Release Asset (pango-arm64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.create_release.outputs.file_name_pango_arm64 }}
+          asset_name: ${{ steps.create_release.outputs.file_name_pango_arm64 }}
+          asset_content_type: application/zip
+      - name: Upload Release Asset (pkgconf)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: pkgconf.zip
+          asset_name: pkgconf.zip
+          asset_content_type: application/zip
