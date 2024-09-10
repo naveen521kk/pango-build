@@ -158,9 +158,9 @@ prefix
 *.swp
 
 
-cairo-build/subprojects/*
-!cairo-build/subprojects/*.wrap
-!cairo-build/subprojects/packagefiles
+pango-build/subprojects/*
+!pango-build/subprojects/*.wrap
+!pango-build/subprojects/packagefiles
 
 pkgconf-build/subprojects/*
 !pkgconf-build/subprojects/*.wrap

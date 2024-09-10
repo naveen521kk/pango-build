@@ -1,4 +1,4 @@
-project('cairo-build', 'c', 'cpp',
+project('pango-build', 'c', 'cpp',
     default_options: [
         'default_library=static',
         'buildtype=release',
