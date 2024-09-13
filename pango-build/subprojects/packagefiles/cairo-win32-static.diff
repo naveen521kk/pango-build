@@ -1,0 +1,36 @@
+diff --git a/meson.build b/meson.build
+index e45e441f3..bda708921 100644
+--- a/meson.build
++++ b/meson.build
+@@ -95,6 +95,9 @@ if cc.get_id() == 'msvc'
+                         # Don't warn about double -> float truncation
+                         '/wd4305',
+                         language : 'c')
++  if get_option('default_library') == 'static'
++    add_project_arguments('-DCAIRO_WIN32_STATIC_BUILD', language : ['c'])
++  endif
+ endif
+ 
+ add_project_arguments('-D_GNU_SOURCE', language: 'c')
+diff --git a/util/meson.build b/util/meson.build
+index 1e186bf66..bf0f9e4c5 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -33,11 +33,17 @@ if gtk_dep.found()
+   ]
+ endif
+ 
++utils_c_args = []
++if get_option('default_library') == 'static'
++  utils_c_args += ['-DXML_STATIC']
++endif
++
+ foreach util : cairo_utils
+   exe_name = util[0].split('.')[0]
+   util_deps = util.get(1, {}).get('deps', [])
+   executable(exe_name, util[0],
+     include_directories: [incbase],
+     dependencies: deps + util_deps + [libcairo_dep, libcairoscript_dep],
++    c_args: utils_c_args,
+   )
+ endforeach

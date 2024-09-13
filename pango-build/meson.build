@@ -3,10 +3,16 @@ project('pango-build', 'c', 'cpp',
         'default_library=static',
         'buildtype=release',
         # 'wrap_mode=nopromote',
-        'force_fallback_for=libpng,pixman,zlib,cairo,fontconfig',
-        'cairo:glib=disabled', # doesn't build statically in Windows
+        'force_fallback_for=libpng,pixman,zlib,cairo,fontconfig,harfbuzz,glib,freetype,fribidi,libffi',
         'cairo:tests=disabled', # We don't need tests
-        'pango:fontconfig=enabled'
+        'cairo:fontconfig=enabled',
+        'cairo:freetype=enabled',
+        'glib:tests=false',
+        'pango:fontconfig=enabled',
+        'pango:freetype=enabled',
+        'harfbuzz:tests=disabled',
+        'glib:sysprof=disabled',
+        'pango:build-testsuite=false'
     ],
 )
 
