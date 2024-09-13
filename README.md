@@ -1,6 +1,6 @@
 # Pango Build
 
-`pango-build` is mainly used for creating wheels for [ManimPango](https://github.com/manimcommunity/manim). It provides a static Windows build of pango including all its dependencies which ManimPango uses for its binary Windows wheels.
+`pango-build` is mainly used for creating wheels for [ManimPango](https://github.com/manimcommunity/manim). It provides a static Windows and macOS build of pango including all its dependencies which ManimPango uses for its binary Windows and macOS wheels.
 
 In addition to pango it also provides a static build of
 [pkgconf](https://github.com/pkgconf/pkgconf) which is required by ManimPango
