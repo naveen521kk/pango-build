@@ -167,7 +167,7 @@ jobs:
     permissions:
       contents: write
     runs-on: windows-latest
-    needs: [build-win-x86, build-win-x64, build-win-pkgconf]
+    needs: [build-win-x86, build-win-x64, build-win-pkgconf, build-mac-x64, build-mac-arm64]
     if: github.event_name == 'release'
     steps:
       - uses: actions/download-artifact@v4
@@ -182,6 +182,14 @@ jobs:
       #   with:
       #     name: pango-build-arm64
       #     path: pango-arm64/
+      - uses: actions/download-artifact@v4
+        with:
+          name: mac-pango-build-x64
+          path: mac-pango-x64/
+      - uses: actions/download-artifact@v4
+        with:
+          name: mac-pango-build-arm64
+          path: mac-pango-arm64/
       - uses: actions/download-artifact@v4
         with:
           name: pkgconf-build
@@ -209,9 +217,11 @@ jobs:
           upload_url=c.json()['upload_url']
           print(f"::set-output name=upload_url::{upload_url}")
           print(f"::set-output name=tag_name::{ref_tag}")
-          print(f"::set-output name=file_name_pango_x86::pango-{ref_tag}-x86.zip")
-          print(f"::set-output name=file_name_pango_x64::pango-{ref_tag}-x64.zip")
+          print(f"::set-output name=file_name_pango_x86::pango-{ref_tag}-windows-x86.zip")
+          print(f"::set-output name=file_name_pango_x64::pango-{ref_tag}-windows-x64.zip")
           # print(f"::set-output name=file_name_pango_arm64::pango-{ref_tag}-arm64.zip")
+          print(f"::set-output name=file_name_mac_pango_x64::pango-{ref_tag}-mac-x64.zip")
+          print(f"::set-output name=file_name_mac_pango_arm64::pango-{ref_tag}-mac-arm64.zip")
 
       - name: Zip it
         shell: bash
@@ -219,11 +229,15 @@ jobs:
           file_name_pango_x86: ${{ steps.create_release.outputs.file_name_pango_x86 }}
           file_name_pango_x64: ${{ steps.create_release.outputs.file_name_pango_x64 }}
           # file_name_pango_arm64: ${{ steps.create_release.outputs.file_name_pango_arm64 }}
+          file_name_mac_pango_x64: ${{ steps.create_release.outputs.file_name_mac_pango_x64 }}
+          file_name_mac_pango_arm64: ${{ steps.create_release.outputs.file_name_mac_pango_arm64 }}
         run: |
           7z a $file_name_pango_x86 pango-x86/*
           7z a $file_name_pango_x64 pango-x64/*
           # 7z a $file_name_pango_arm64 pango-arm64/*
-          7z a pkgconf.zip pkgconf/
+          7z a pkgconf-windows.zip pkgconf/
+          7z a $file_name_mac_pango_x64 mac-pango-x64/*
+          7z a $file_name_mac_pango_arm64 mac-pango-arm64/*
 
       - name: Upload Release Asset (pango-x86)
         uses: actions/upload-release-asset@v1
@@ -258,6 +272,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: pkgconf.zip
-          asset_name: pkgconf.zip
+          asset_path: pkgconf-windows.zip
+          asset_name: pkgconf-windows.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset (mac-pango-x64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.create_release.outputs.file_name_mac_pango_x64 }}
+          asset_name: ${{ steps.create_release.outputs.file_name_mac_pango_x64 }}
+          asset_content_type: application/zip
+      - name: Upload Release Asset (mac-pango-arm64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.create_release.outputs.file_name_mac_pango_arm64 }}
+          asset_name: ${{ steps.create_release.outputs.file_name_mac_pango_arm64 }}
           asset_content_type: application/zip
