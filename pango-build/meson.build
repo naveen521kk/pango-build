@@ -3,7 +3,7 @@ project('pango-build', 'c', 'cpp',
         'default_library=static',
         'buildtype=release',
         # 'wrap_mode=nopromote',
-        'force_fallback_for=libpng,pixman,zlib,cairo,fontconfig,harfbuzz,glib,freetype,fribidi,libffi',
+        'force_fallback_for=libpng,pixman,zlib,cairo,fontconfig,harfbuzz,glib,freetype,fribidi,libffi,expat,proxy-libintl',
         'cairo:tests=disabled', # We don't need tests
         'cairo:fontconfig=enabled',
         'cairo:freetype=enabled',
@@ -16,4 +16,5 @@ project('pango-build', 'c', 'cpp',
     ],
 )
 
+subproject('proxy-libintl')
 subproject('pango')
