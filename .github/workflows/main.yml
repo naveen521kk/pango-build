@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-x86:
+  build-win-x86:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
           name: pango-build-x86
           path: prefix-pango-32/
 
-  build-x64:
+  build-win-x64:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -60,7 +60,7 @@ jobs:
           name: pango-build-x64
           path: prefix-pango-64/
 
-  # build-arm64:
+  # build-win-arm64:
   #   runs-on: windows-latest
   #   steps:
   #     - uses: actions/checkout@v4
@@ -89,7 +89,51 @@ jobs:
   #         name: pango-build-arm64
   #         path: prefix-pango-arm64/
 
-  build-pkgconf:
+  build-mac-x64:
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Build Pango x64
+        run: |
+          cd pango-build
+          meson setup build-pango-x64 \
+            --prefix=$GITHUB_WORKSPACE/mac-prefix-pango-64
+          meson compile -C build-pango-x64
+          meson install -C build-pango-x64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac-pango-build-x64
+          path: mac-prefix-pango-64/
+  
+  build-mac-arm64:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Build Pango arm64
+        run: |
+          cd pango-build
+          meson setup build-pango-arm64 \
+            --prefix=$GITHUB_WORKSPACE/mac-prefix-pango-arm64
+          meson compile -C build-pango-arm64
+          meson install -C build-pango-arm64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac-pango-build-arm64
+          path: mac-prefix-pango-arm64/
+
+  build-win-pkgconf:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -119,7 +163,7 @@ jobs:
     permissions:
       contents: write
     runs-on: windows-latest
-    needs: [build-x86, build-x64, build-pkgconf]
+    needs: [build-win-x86, build-win-x64, build-win-pkgconf]
     if: github.event_name == 'release'
     steps:
       - uses: actions/download-artifact@v4
