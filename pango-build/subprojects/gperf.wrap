@@ -2,7 +2,6 @@
 directory=gperf
 url=https://gitlab.freedesktop.org/tpm/gperf.git
 push-url=https://gitlab.freedesktop.org/tpm/gperf.git
-revision=c24359b4eab86d71c655c3b3fc969f13aac879ce
 revision=meson
 
 [provide]
