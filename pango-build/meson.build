@@ -12,7 +12,8 @@ project('pango-build', 'c', 'cpp',
         'pango:freetype=enabled',
         'harfbuzz:tests=disabled',
         'glib:sysprof=disabled',
-        'pango:build-testsuite=false'
+        'pango:build-testsuite=false',
+        'harfbuzz:cairo=disabled', # not strictly needed and allows a recursive dependency
     ],
 )
 
