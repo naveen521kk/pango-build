@@ -1,10 +1,10 @@
 [wrap-file]
-directory = harfbuzz-9.0.0
-source_url = https://github.com/harfbuzz/harfbuzz/releases/download/9.0.0/harfbuzz-9.0.0.tar.xz
-source_filename = harfbuzz-9.0.0.tar.xz
-source_hash = a41b272ceeb920c57263ec851604542d9ec85ee3030506d94662067c7b6ab89e
-source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/harfbuzz_9.0.0-1/harfbuzz-9.0.0.tar.xz
-wrapdb_version = 9.0.0-1
+directory = harfbuzz-11.4.3
+source_url = https://github.com/harfbuzz/harfbuzz/releases/download/11.4.3/harfbuzz-11.4.3.tar.xz
+source_filename = harfbuzz-11.4.3.tar.xz
+source_hash = 6660415ad48fa1a46e4fa75fcdb70ff819c452153f08677d34ffb29eda66415d
+source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/harfbuzz_11.4.3-1/harfbuzz-11.4.3.tar.xz
+wrapdb_version = 11.4.3-1
 
 [provide]
 dependency_names = harfbuzz, harfbuzz-cairo, harfbuzz-gobject, harfbuzz-icu, harfbuzz-subset
