@@ -18,4 +18,5 @@ project('pango-build', 'c', 'cpp',
 )
 
 subproject('proxy-libintl')
+subproject('freetype2')
 subproject('pango')
