@@ -102,7 +102,7 @@ jobs:
       - name: Build Pango x64
         env:
           PKG_CONFIG: "invalid-exe"
-          MACOSX_DEPLOYMENT_TARGET: "10.9"
+          MACOSX_DEPLOYMENT_TARGET: "10.13"
         run: |
           cd pango-build
           meson setup build-pango-x64 \
