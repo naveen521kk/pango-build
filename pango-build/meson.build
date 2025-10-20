@@ -14,10 +14,9 @@ project('pango-build', 'c', 'cpp',
         'glib:sysprof=disabled',
         'pango:build-testsuite=false',
         'harfbuzz:cairo=disabled', # not strictly needed and allows a recursive dependency
-        'freetype:harfbuzz=disabled'
+        'harfbuzz:freetype=disabled' # this backend not required
     ],
 )
 
 subproject('proxy-libintl')
-subproject('freetype2')
 subproject('pango')
