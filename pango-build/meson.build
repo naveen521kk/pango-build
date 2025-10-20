@@ -14,6 +14,7 @@ project('pango-build', 'c', 'cpp',
         'glib:sysprof=disabled',
         'pango:build-testsuite=false',
         'harfbuzz:cairo=disabled', # not strictly needed and allows a recursive dependency
+        'harfbuzz:freetype=disabled' # this backend not required
     ],
 )
 
