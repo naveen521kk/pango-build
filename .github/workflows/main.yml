@@ -172,27 +172,27 @@ jobs:
     needs: [build-win-x86, build-win-x64, build-win-pkgconf, build-mac-x64, build-mac-arm64]
     if: github.event_name == 'release'
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: pango-build-x86
           path: pango-x86/
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: pango-build-x64
           path: pango-x64/
-      # - uses: actions/download-artifact@v5
+      # - uses: actions/download-artifact@v6
       #   with:
       #     name: pango-build-arm64
       #     path: pango-arm64/
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: mac-pango-build-x64
           path: mac-pango-x64/
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: mac-pango-build-arm64
           path: mac-pango-arm64/
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: pkgconf-build
           path: pkgconf/
