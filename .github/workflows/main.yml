@@ -30,7 +30,7 @@ jobs:
             --prefix=$env:GITHUB_WORKSPACE/prefix-pango-32
           meson compile -C build-pango-x86
           meson install -C build-pango-x86
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: pango-build-x86
           path: prefix-pango-32/
@@ -55,7 +55,7 @@ jobs:
             --prefix=$env:GITHUB_WORKSPACE/prefix-pango-64
           meson compile -C build-pango-x64
           meson install -C build-pango-x64
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: pango-build-x64
           path: prefix-pango-64/
@@ -84,7 +84,7 @@ jobs:
   #           --cross-file ../.ci/cross_amd64_arm64.txt
   #         meson compile -C build-pango-arm64
   #         meson install -C build-pango-arm64
-  #     - uses: actions/upload-artifact@v4
+  #     - uses: actions/upload-artifact@v5
   #       with:
   #         name: pango-build-arm64
   #         path: prefix-pango-arm64/
@@ -109,7 +109,7 @@ jobs:
             --prefix=$GITHUB_WORKSPACE/mac-prefix-pango-64
           meson compile -C build-pango-x64
           meson install -C build-pango-x64
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: mac-pango-build-x64
           path: mac-prefix-pango-64/
@@ -134,7 +134,7 @@ jobs:
             --prefix=$GITHUB_WORKSPACE/mac-prefix-pango-arm64
           meson compile -C build-pango-arm64
           meson install -C build-pango-arm64
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: mac-pango-build-arm64
           path: mac-prefix-pango-arm64/
@@ -159,7 +159,7 @@ jobs:
             --prefix=$env:GITHUB_WORKSPACE/prefix-pkgconf
           meson compile -C build-x64
           meson install -C build-x64
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: pkgconf-build
           path: prefix-pkgconf/
