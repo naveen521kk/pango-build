@@ -90,7 +90,7 @@ jobs:
   #         path: prefix-pango-arm64/
 
   build-mac-x64:
-    runs-on: macos-13
+    runs-on: macos-15-intel
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
@@ -115,7 +115,7 @@ jobs:
           path: mac-prefix-pango-64/
   
   build-mac-arm64:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
