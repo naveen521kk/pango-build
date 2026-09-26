@@ -89,7 +89,7 @@ jobs:
   #           --cross-file ../.ci/cross_amd64_arm64.txt
   #         meson compile -C build-pango-arm64
   #         meson install -C build-pango-arm64
-  #     - uses: actions/upload-artifact@v5
+  #     - uses: actions/upload-artifact@v7
   #       with:
   #         name: pango-build-arm64
   #         path: prefix-pango-arm64/
